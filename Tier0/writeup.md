@@ -209,4 +209,4 @@ KEYS*
 GET flag
 
 ```
-![Screenshot showing GET flag result](./get_lag.jpg)
+![Screenshot showing GET flag result](Tier0/get_flag.jpg)
