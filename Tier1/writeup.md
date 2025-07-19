@@ -107,3 +107,49 @@ The response shows that it connect to mysql server.
 According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8 .
 
 -- 
+
+### Task 3
+### Process of solving Task 3
+1. use nmap to scan the port
+   ```bash
+    # Target machine: 10.129.1.15
+    # sudo: required because -sS (SYN scan) needs raw socket access
+    # -p-: scan all TCP ports (not just the default 1000)
+    # -sS: SYN scan (faster and more stealthy than a full TCP connect scan)
+    # -Pn: skip host discovery (assume the host is up even if ping fails)
+    # --min-rate=1000: send at least 1000 packets per second to speed up scanning
+    # -oN: save the output in normal text format to full_scan.txt for later reference
+    sudo nmap -p- -sS -Pn --min-rate=1000 -oN full_scan.txt 10.129.1.15
+    ```
+2. After scanning the port , i got the result of
+   ```bash
+   21/tcp  open  ftp
+   ```
+
+   This means that there is a port open and the service of the port is ftp.
+
+   Therefore, we use ftp command.
+
+3. login ftp to the traget mechine:
+
+    ```bash
+   ftp 10.129.1.15
+   ```
+
+    We get the response and use anonymous
+   
+    ```bash
+    Name: anonymous  
+    Password: <press enter>
+    ```
+    -> 230 Login successful
+
+4. After log in , we get two different documents: One is allowed.userlist, and the other is        allowed.userlist.passwd.
+
+   I used 'GET' command to download the documents.
+
+    ```bash
+    get allowed.userlist
+    get allowed.userlist.passwd
+    ```
+5. 
