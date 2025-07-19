@@ -46,5 +46,12 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
 
 --
 
-###Task 2 
+### Task 2 
+### Process of solving task 2
+1. We need to scan the target mechine and get the port information by using nmap
+   ```bash
+    nmap -sV -Pn 10.129.183.140
+    ```
+2. According to the response, we can know that the service is mysql.
+4. 
    
