@@ -207,5 +207,5 @@ KEYS*
 
 #We can use GET to download the flag file
 GET flag
-![Screenshot showing GET flag result](./get flag.jpg)
+![Screenshot showing GET flag result](./get_lag.jpg)
 ```
