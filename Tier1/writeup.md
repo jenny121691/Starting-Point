@@ -15,7 +15,7 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
 
 ### Process of task 1
 1. Scan port using nmap to the target machine cause we need to get the information of the port:
-   ![scan port](Task1 scan.jpg)
+   ![scan port](Task1_scan.jpg)
 3. I tried to open the wesite to check if it is work or not and we found that we can get into the website:
 4. I tried to use the method of SQL injection by using  '1 = 1;--' , which means let login always true.
    And i found that i can log into the website , and then we get the flag.
