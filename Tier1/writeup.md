@@ -18,7 +18,7 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
     ```bash
     nmap -sV -Pn 10.129.183.140
     ```
-   ![scan port](Task1_scan.jpg)
+   ![scan port](./image/Task1_scan.jpg)
 
    From this image , it shows that there is one port open which is tcp and the service is http.
 
@@ -28,7 +28,7 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
    ```bash
    http://10.129.183.140
    ```
-    ![scan port](Task1_login.jpg)
+    ![scan port](./image/Task1_login.jpg)
    
 3. I tried to use the method of SQL injection by using  '1 = 1;--' , which means let login always true.
    
@@ -42,7 +42,7 @@ The top 10 classification SQL injection, A03: 2021-Injection have high risks.
     #i type 1=1; -- in the login part and log in successfully
    1 = 1; -- 
    ```
-![scan port](Task1_get_flag.jpg)
+![scan port](./image/Task1_get_flag.jpg)
 
 --
 
