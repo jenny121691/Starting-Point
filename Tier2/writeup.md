@@ -160,6 +160,18 @@
 
       ![scan port](./image/Task5_get_root.jpg)
 
+### ⛏️Summary of Task 1
+   In this task , our goal was to gain both user and root access to a Windows machine by leveraging exposed services and credentials. 
+
+   - Used 'nmap' to identify open SMB and MSSQL services.
+   - Extracted login credentials from SMB shared files.
+   - Logged into MSSQL using 'impacket' and enabled command execution via 'xp_cmdshell'
+   - Established a reverse shell using Netcat and PowerShell commands.
+   - Enumerated the system with 'winPEAs' and discovered stored admin credentials in PowerShell history.
+   - Used these credentials to log in as Administrator and retrieved and root flag.
+
+     Key Concepts covered : SMB enumeration, SQL command execution, reverse shell setup, privillege escalation, post-exploitation credential hunting.
+     
 ## Task 2
 
 ### 🛠️The process of solving task2
@@ -497,3 +509,9 @@ java -jar burpsuite_community_v2024.1.1.jar
 
      We get the root flag.
       ![scan port](./image/Task3_getRoot.jpg)
+
+## Summary of Tier 2 
+
+- use 'nmap' to scan 
+
+
