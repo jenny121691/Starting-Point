@@ -339,6 +339,77 @@ According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8
    ```
 
     ![scan port](./image/Task5_nmap.jpg)
+
+   According to this result we can see there is 2 ports open, one is ssh and the other one is http.
    
-3. 
+2. I tried open the website by using: http://10.129.119.152.
+
+   find the webiste.
+
+   ![scan port](./image/Task5_http.jpg)
     
+    We can see the email address shows: mail@totopper.htb
+
+    'totopper.htb' is a actual hostname used for virtual hosting. The server will returns different content based on this domain.
+
+3. Use /etc/hosts file to map the domain
+
+     ```bash
+     sudo nano /etc/hosts
+     ```
+
+     When we open the edit file, we add add 10.129.119.152 thetoppers.htb
+
+4. After we save the file, we can use Gobuster to vhostthe target machine.
+
+   ```bash
+   # --append-domain : append .thetoppers.htb to each word in the wordlist
+   # -u : target url
+   # -w : Wordlist to use for vhost
+   gobuster vhost --append-domain -u http://thetoppers.htb -w ~/wordlists/subdomains-top1million-20000.txt
+   ```
+    ![scan port](./image/Task5_gobuster.jpg)
+   
+5. (Knowledge Question):
+   
+   What is Amazon S3? -> This is a cloud storage service used to store and back up the files.
+
+   install the AWS CLI:
+   
+   ```bash
+   sudo apt install awscli -y
+   aws configure
+   ```
+
+   We install AWS is because it is a tool to help you commands to talk to Amazon S3 and see or download files.
+
+6. List all buckets (S3 stroage folders)
+   
+   ```bash
+   aws --endpoint-url http://s3.thetoppers.htb s3 ls --no-sign-request
+   ```
+   This shows the avialable buckets: 2025-07-01 16:30:49 thetoppers.htb
+
+7. List files inside the bucket
+   
+   ```bash
+   aws --endpoint-url http://s3.thetoppers.htb s3 ls s3://thetoppers.htb --no-sign-request
+   ```
+
+   Results:
+
+   <pre>
+    2025-07-01 16:30:49      0 .htaccess  
+    2025-07-01 16:30:49      11952 index.php  
+   </pre>
+
+8. Dowload the file to check for flag
+
+   ```bash
+   aws --endpoint-url http://s3.thetoppers.htb s3 cp s3://thetoppers.htb/index.php ./ --no-sign-request
+   ```
+
+   We download index.php because it may contain the flag and we get the flag
+
+   
+   
