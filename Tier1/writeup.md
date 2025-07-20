@@ -332,5 +332,13 @@ According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8
 
 ### 🗄️ Process of solving task5
 
+1. Use nmap to scan the target machine (10.129.119.152).
+   
+   ```bash
+   nmap -sV -Pn --min-rate 1000 -oN scan.txt 10.129.119.152
+   ```
 
+    ![scan port](./image/Task5_nmap.jpg)
+   
+3. 
     
