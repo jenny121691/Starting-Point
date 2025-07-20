@@ -144,12 +144,43 @@ According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8
     ```
     -> 230 Login successful
 
-4. After log in , we get two different documents: One is allowed.userlist, and the other is        allowed.userlist.passwd.
+4. After log in , i use 'ls' to show all documents in ftp.
+   we get two different documents: One is allowed.userlist, and the other is              allowed.userlist.passwd.
 
-   I used 'GET' command to download the documents.
+   I used 'CAT' command to download the documents.
 
     ```bash
-    get allowed.userlist
-    get allowed.userlist.passwd
+    cat allowed.userlist
+    cat allowed.userlist.passwd
     ```
-5. 
+    
+5. After download the allowed.userlist.passwd, i found that there are three different password     at allowed.userlist.passwd.
+    ![scan port](./image/Task3_cat_allowed.jpg)
+
+6. I tried http://10.129.15 and found that can not open the website, because we got the         password and the admin so i think that it might have some login website in the target mechine.
+   I used Gobuster to find the login page.
+    ```bash
+    gobuster dir -u http://10.129.1.15 -w /usr/share/wordlists/dirb/common.txt -x php
+    ```
+
+   The result shows: 
+   ```bash
+   Found: login.php
+   ```
+   This means it have another website called login.php
+
+   Therefore, i type http://10.129.1.15/login.php and opened the website
+    ![scan port](./image/Task3_sign_in.jpg)
+
+7. I tried to type the login user: admin , and tried three passwords that i found before:
+
+   And then i got the flag:
+
+   ![scan port](./image/Task3_get_flag.jpg)
+
+--
+
+### Task 4
+
+   
+   
