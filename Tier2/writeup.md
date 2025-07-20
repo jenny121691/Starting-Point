@@ -148,6 +148,26 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
 ### 🛠️The process of solving task2
 
+1. First, I tried to open the main page at http://10.129.95.191 (target machine:    10.129.95.191), but it returned a blank or inaccessible page.
+
+   To discover any hidden or unlisted directories on the server, I used Gobuster with a common wordlist:
+   
+   ```bash
+   gobuster dir -u http://10.129.95.191 -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+    ```
+
+   After using the buster, i found a hidden path:
+
+   ```bash
+   /cdn-cgi/login/
+    ```
+2. Therefore, i tried the login page by using http://10.129.95.191/cdn-cgi/login/.
+
+   Can log in the page successfully.
+
+   
+   
+   
 
 
      
