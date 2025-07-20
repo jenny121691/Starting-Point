@@ -411,5 +411,6 @@ According to the result, we can find the flag:  7b4bec00d1a39e3dd4e021ec3d915da8
 
    We download index.php because it may contain the flag and we get the flag
 
+   ![scan port](./image/Task5_get_flag.jpg)
    
    
