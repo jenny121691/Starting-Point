@@ -266,7 +266,28 @@ java -jar burpsuite_community_v2024.1.1.jar
 
 ### Process of solving task 3
 
-    
+1. Use nmap to scan the target machine(10.129.159.234):
+   
+   ```bash
+   
+   nmap -Pn -sC -sV --min-rate 1000 -T4 -oN fast_scan.txt 10.129.159.234
+
+   ```
+
+   After scanning the port , i found that it shows three different, SSH(22), HTTP(80) and FTP(21).
+
+   FTP is used to transfer files and runs on TCP port 21.
+
+2. I typed ftp command to login:
+
+   ```bash
+
+   ftp -4 10.129.159.234 -v -a
+
+   ```
+   
+    ![scan port](./image/Task3_ftp.jpg)
+   
    
    
    
