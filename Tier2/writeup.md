@@ -144,7 +144,7 @@ In this part we can get the user flag: 3e7b102e78218e935bf3f4951fec21a3
 
     Get the root flag: b91ccec3305e98240082d4474b848528.
 
-    ![root flag](./image/Task5_get_root.jpg)
+     ![scan port](./image/Task5_get_root.jpg)
 
 ## Task 2
 
