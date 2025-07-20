@@ -193,15 +193,16 @@ java -jar burpsuite_community_v2024.1.1.jar
 
    Can get into the page successfully.
 
-   ![scan port](./image/Task5_login.jpg)
+   ![log in as guest](./image/Task5_login.jpg)
    
    When i click the log in as guest , the url changed into http://10.129.95.191/cdn-cgi/login/admin.php.
 
    The page exist but only can access as the guest.
+   
 
     ![scan port](./image/Task5_click.jpg)
 
-3. We use 'curl - I' to check admin page:
+4. We use 'curl - I' to check admin page:
 
    ```bash
 
