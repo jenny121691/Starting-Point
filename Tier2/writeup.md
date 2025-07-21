@@ -510,8 +510,5 @@ java -jar burpsuite_community_v2024.1.1.jar
      We get the root flag.
       ![scan port](./image/Task3_getRoot.jpg)
 
-## Summary of Tier 2 
-
-- use 'nmap' to scan 
 
 
